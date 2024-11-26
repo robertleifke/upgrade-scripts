@@ -1,14 +1,13 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-import {ExampleNFT} from "./ExampleNFT.sol";
+import {ServiceManager} from "./ServiceManager.sol";
+import {UpgradeScripts} from "src/UpgradeScripts.sol";
+import {ERC1967Proxy} from "Predicate/lib/openzeppelin-contracts/contracts/proxy/ERC1967/ERC1967Proxy.sol";
+import {UUPSUpgradeable} from "Predicate/lib/openzeppelin-contracts/contracts/proxy/utils/UUPSUpgradeable.sol";
 
-import {UpgradeScripts} from "upgrade-scripts/UpgradeScripts.sol";
-import {ERC1967Proxy} from "openzeppelin-contracts/proxy/ERC1967/ERC1967Proxy.sol";
-import {UUPSUpgradeable} from "openzeppelin-contracts/proxy/utils/UUPSUpgradeable.sol";
-
-contract ExampleSetupScript is UpgradeScripts {
-    ExampleNFT nft;
+contract PredicateSetupScript is UpgradeScripts {
+    ServiceManager serviceManager;
 
     /// @dev using OZ's ERC1967Proxy
     function getDeployProxyCode(address implementation, bytes memory initCall)
